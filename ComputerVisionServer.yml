@@ -1,10 +1,12 @@
-name: 'ComputerVision'
+name: 'ComputerVisionServer'
 channels:
   - conda-forge
-  - pytorch
-  - bioconda
   - defaults
 dependencies:
+  - numpy
+  - pillow
+  - opencv
+  - face_recognition
   - pip>=20
   - pip:
     - Flask

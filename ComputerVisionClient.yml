@@ -1,0 +1,7 @@
+name: 'ComputerVisionClient'
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - docopt
+  - requests
