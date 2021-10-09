@@ -1,0 +1,10 @@
+name: 'ComputerVision'
+channels:
+  - conda-forge
+  - pytorch
+  - bioconda
+  - defaults
+dependencies:
+  - pip>=20
+  - pip:
+    - Flask
