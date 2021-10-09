@@ -1,3 +1,4 @@
+gunicorn
 numpy
 pillow
 face_recognition
