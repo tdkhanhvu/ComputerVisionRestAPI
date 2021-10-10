@@ -45,7 +45,7 @@ articles, and such.
 Submit Feedback
 ~~~~~~~~~~~~~~~
 
-The best way to send feedback is to file an issue at https://github.com/UBC-MDS/ComputerVisionRestAPI/issues.
+The best way to send feedback is to file an issue at https://github.com/tdkhanhvu/ComputerVisionRestAPI/issues.
 
 If you are proposing a feature:
 
@@ -76,7 +76,7 @@ Ready to contribute? Here's how to set up `ComputerVisionRestAPI` for local deve
 
        $ conda env create -f ComputerVisionClient.yml
 	   
-Aternatively, you can download a Docker image using the below command:
+   Aternatively, you can download a Docker image using the below command:
    .. code-block:: console
 
        $ docker pull tdkhanhvu/cv-face-recognition
