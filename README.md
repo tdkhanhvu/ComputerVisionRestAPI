@@ -52,27 +52,27 @@ Please go to this [Docker website](https://hub.docker.com/r/tdkhanhvu/cv-face-re
 
 Due to the time constraint, I have chosen the lightweight frameworks / components to build this project. As a result, below are the few considerations to further enhance the performance and security of this project:
 
-1. Replace the web framework
+**1. Replace the web framework**
 
 Some of the drawbacks of Flask are: unsuitable for big applications, no admin site, potentially challenging migration... Therefore, we can consider other full-fledged frameworks such as Django to substitute Flask.
 
-2. Replace the database
+**2. Replace the database**
 
 SQLite can only handle low to medium traffic HTTP requests, and its database size is restricted to 2GB in most cases. Hence, we can contemplate switching to other powerful Databases such as MySQL or PostgreSQL if there is an increase in demand for this service.
 
-3. Develop a separate portal to display requests
+**3. Develop a separate portal to display requests**
 
 We should introduce a separate web page with authentication to display requests sent to this website.
 
-4. Replace the Pillow library used
+**4. Replace the Pillow library used**
 
 I used the Pillow library to convert the data sent to the server into an image. Nevertheless, I had some trouble trying to package this project into a Docker image. It took me a few hours to troubleshoot this problem, and fortunately, I managed to find a sample Dockerfile on a Github repository listing the necessary dependencies to build Pillow. The same problem did not occur when installing using Conda locally or Pip on Heroku web page.
 
-5. Reduce the size of the Docker image and optimize the Dockerfile
+**5. Reduce the size of the Docker image and optimize the Dockerfile**
 
 Due to the problem in point 4 above, I had to list quite a number of dependencies and this probably led to a huge Docker image of 1GB despite the simplicity of this project. Further work can be done to trim this Docker image.
 
-6. Introduce other features to analyze the pictures sent
+**6. Introduce other features to analyze the pictures sent**
 
 For now, I only focus on finding the rectangle surrounding the face. However, we can introduce other Rest API Endpoints such as to detect the remaining items in the background, or predicting the gender, age, race... of the person.
 
