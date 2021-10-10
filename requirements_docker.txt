@@ -1,5 +1,4 @@
 pandas
 gunicorn
-pillow>=8.0
 face_recognition
 Flask

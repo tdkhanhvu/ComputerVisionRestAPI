@@ -55,7 +55,7 @@ def list_requests():
         df = pd.DataFrame(data, columns =['Id', 'IP', 'Timestamp'])
         print(df.shape)
 
-        return render_template('view.html', tables=[df.to_html(classes='Vu')],
+        return render_template('view.html', tables=[df.to_html()],
     titles = ['Request'])
 
 
