@@ -1,9 +1,10 @@
 # base python imports
-import io                
+import io
 import base64                  
 from datetime import datetime
 
 # image-related imports
+import pandas as pd
 import numpy as np
 from PIL import Image
 
@@ -11,31 +12,52 @@ from PIL import Image
 import face_recognition
 
 # Rest API library import
-from flask import Flask, request, abort
+from flask import Flask, request, abort, render_template
 
 # Lite SQL DB
 import sqlite3 as sql
 
-def connect_db():
-    connection = sql.connect('face-recognition-requests.db')
+DB = 'face-recognition-requests.db'
 
-    connection.execute("""
-        CREATE TABLE IF NOT EXISTS requests (
-            id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-            ip VARCHAR,
-            timestamp TIMESTAMP
-        );
-    """)
+def connect_db():
+    with sql.connect(DB) as connection:
+        connection.execute("""
+            CREATE TABLE IF NOT EXISTS requests (
+                id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+                ip VARCHAR,
+                timestamp TIMESTAMP
+            );
+        """)
 
 connect_db()
 app = Flask(__name__)
 
 def write_record(req):
-    with sql.connect('face-recognition-requests.db') as connection:
+    with sql.connect(DB) as connection:
+        cur = connection.cursor()
         insert_sql = 'INSERT INTO requests (ip, timestamp) values(?, ?)'
         data = (req.remote_addr, str(datetime.now(tz=None)))
 
-        connection.execute(insert_sql, data)
+        cur.execute(insert_sql, data)
+
+        connection.commit()
+
+
+@app.route('/', methods= ['GET'])
+def list_requests():
+    with sql.connect(DB) as connection:
+        read_sql = 'SELECT * FROM requests;'
+
+        cur = connection.cursor()
+        cur.execute(read_sql)
+
+        data = cur.fetchall()
+        df = pd.DataFrame(data, columns =['Id', 'IP', 'Timestamp'])
+        print(df.shape)
+
+        return render_template('view.html', tables=[df.to_html(classes='Vu')],
+    titles = ['Request'])
+
 
 @app.route('/recognizeFace', methods = ['POST'])
 def recognize_face():  

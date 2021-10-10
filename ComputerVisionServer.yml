@@ -3,7 +3,7 @@ channels:
   - conda-forge
   - defaults
 dependencies:
-  - numpy
+  - pandas
   - pillow
   - face_recognition
   - pip>=20
