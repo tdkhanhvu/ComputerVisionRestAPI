@@ -3,9 +3,10 @@ import io
 import base64                  
 from datetime import datetime
 
-# image-related imports
 import pandas as pd
 import numpy as np
+
+# image-related imports
 from PIL import Image
 
 # Computer Vision library imports
@@ -19,8 +20,10 @@ import sqlite3 as sql
 
 DB = 'face-recognition-requests.db'
 
-def connect_db():
-    with sql.connect(DB) as connection:
+def create_table(db):
+    """Create the table in this Database if not exists"""
+
+    with sql.connect(db) as connection:
         connection.execute("""
             CREATE TABLE IF NOT EXISTS requests (
                 id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
@@ -29,11 +32,13 @@ def connect_db():
             );
         """)
 
-connect_db()
+create_table(DB)
 app = Flask(__name__)
 
-def write_record(req):
-    with sql.connect(DB) as connection:
+def write_record(req, db=DB):
+    """Write the timestamp and ip address of this request into the db"""
+
+    with sql.connect(db) as connection:
         cur = connection.cursor()
         insert_sql = 'INSERT INTO requests (ip, timestamp) values(?, ?)'
         data = (req.remote_addr, str(datetime.now(tz=None)))
@@ -42,10 +47,18 @@ def write_record(req):
 
         connection.commit()
 
+def convert_into_image(request):
+    """Convert the image sent in this request into an Image object"""
+    im_b64 = request.json['image']
+    img_bytes = base64.b64decode(im_b64.encode('utf-8'))
+    
+    return Image.open(io.BytesIO(img_bytes))
 
 @app.route('/', methods= ['GET'])
-def list_requests():
-    with sql.connect(DB) as connection:
+def list_requests(db=DB):
+    """List all requests sent to this server"""
+
+    with sql.connect(db) as connection:
         read_sql = 'SELECT * FROM requests;'
 
         cur = connection.cursor()
@@ -60,15 +73,14 @@ def list_requests():
 
 
 @app.route('/recognizeFace', methods = ['POST'])
-def recognize_face():  
+def recognize_face():
+    """Send back coordinates of the rectangle surrounding the face"""
     if not request.json or 'image' not in request.json:
         abort(400)
     
     write_record(request)
-    # convert base64 encoded string into bytes and PIL Image object
-    im_b64 = request.json['image']
-    img_bytes = base64.b64decode(im_b64.encode('utf-8'))
-    img = Image.open(io.BytesIO(img_bytes))
+
+    img = convert_into_image(request)
 
     # PIL image object to numpy array
     arr = np.asarray(img)      
