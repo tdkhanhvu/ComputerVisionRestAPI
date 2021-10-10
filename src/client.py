@@ -10,7 +10,6 @@ Options:
 --img_path=<img_path>    The path to the image to be processed
 """
 
-import sys
 import base64
 import json                    
 from docopt import docopt
@@ -20,19 +19,22 @@ import requests
 opt = docopt(__doc__)
 
 def load_image(img_path):
+    """Load an image from a path"""
     with open(img_path, "rb") as f:
         img_bytes = f.read()        
     
     return base64.b64encode(img_bytes).decode("utf8")
 
 def send_request(api, image_file):
-    headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
+    """Send this image to this API End Point"""
+    headers = {"Content-type": "application/json", "Accept": "text/plain"}
     
     payload = json.dumps({"image": image_file, "other_key": "value"})
     
     return requests.post(api, data=payload, headers=headers)
 
 def proces_result(response):
+    """Process the response sent by the server"""
     try:
         data = response.json()     
         print("Response:", data)                
@@ -40,6 +42,7 @@ def proces_result(response):
         print("Error:", response.text)
 
 def main(api, img_path):
+    """Send an image to a REST API using HTTP POST"""
     print("API:", api, ", Image path:", img_path)
 
     image_file = load_image(img_path)
