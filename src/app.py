@@ -32,9 +32,6 @@ def create_table(db):
             );
         """)
 
-create_table(DB)
-app = Flask(__name__)
-
 def write_record(req, db=DB):
     """Write the timestamp and ip address of this request into the db"""
 
@@ -54,6 +51,9 @@ def convert_into_image(request):
     
     return Image.open(io.BytesIO(img_bytes))
 
+create_table(DB)
+app = Flask(__name__)
+
 @app.route('/', methods= ['GET'])
 def list_requests(db=DB):
     """List all requests sent to this server"""
@@ -71,7 +71,6 @@ def list_requests(db=DB):
         return render_template('view.html', tables=[df.to_html()],
     titles = ['Request'])
 
-
 @app.route('/recognizeFace', methods = ['POST'])
 def recognize_face():
     """Send back coordinates of the rectangle surrounding the face"""
@@ -86,7 +85,7 @@ def recognize_face():
     arr = np.asarray(img)      
     print('Receive an image of shape:', arr.shape)
 
-    coords = face_recognition.face_locations(arr)[0]
+    coords = face_recognition.face_locations(arr)
     print('Return coordinates: ', coords)
 
     return {'coordinates': coords}
