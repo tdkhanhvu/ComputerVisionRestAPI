@@ -77,6 +77,7 @@ Ready to contribute? Here's how to set up `ComputerVisionRestAPI` for local deve
        $ conda env create -f ComputerVisionClient.yml
 	   
    Aternatively, you can download a Docker image using the below command:
+   
    .. code-block:: console
 
        $ docker pull tdkhanhvu/cv-face-recognition
