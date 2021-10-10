@@ -1,3 +1,4 @@
+pandas
 cmake
 gunicorn
 pillow>=8.0
