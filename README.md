@@ -66,7 +66,9 @@ We should introduce a separate web page with authentication to display requests 
 
 **4. Replace the Pillow library used**
 
-I used the Pillow library to convert the data sent to the server into an image. Nevertheless, I had some trouble trying to package this project into a Docker image. It took me a few hours to troubleshoot this problem, and fortunately, I managed to find a sample Dockerfile on a Github repository listing the necessary dependencies to build Pillow. The same problem did not occur when installing using Conda locally or Pip on Heroku web page.
+I used the Pillow library to convert the data sent to the server into an image. Nevertheless, I had some trouble trying to package this project into a Docker image. It took me a few hours to troubleshoot this problem, and fortunately, I managed to find a sample Dockerfile on a Github repository listing the necessary dependencies to build Pillow. Hence, I also need to split the requirements.txt into a separate file for Docker to move Pillow to Dockerfile.
+
+The same problem did not occur when installing using Conda locally or Pip on Heroku web page.
 
 **5. Reduce the size of the Docker image and optimize the Dockerfile**
 
