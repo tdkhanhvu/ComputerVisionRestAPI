@@ -1,15 +1,15 @@
 # ComputerVisionRestAPI
 
 ## Project Overview
-`ComputerVisionRestAPI` is a Python projects that allows users to identify the coordinates of the rectangular box localizing a face. Users can send a HTTP POST request with an image attached to the server, and receive back the 4 coordinates of this rectangle. In addition, this project also includes a Client program to make it easier for users to send the image without the hassle of coding.
+`ComputerVisionRestAPI` is a Python project allowing users to identify the coordinates of the rectangular boxes localizing faces. Users can send an HTTP POST request with an image attached to the server, and receive back a lists of these rectangles' coordinates. In addition, this project also includes a Client program to make it easier for users to send the image without the hassle of coding.
 
 ## Components:
 
 ![image](src/static/architecture.png)
 
-This project includes the below components:
-- A REST API Server written in Python using Flask library
-- A REST API Client to send the POST request to the server
+This project includes below components:
+- A REST API Server written in Python using Flask framework
+- A REST API Client to send the HTTP POST request to the server
 - A built-in SQL lite database to record the requests sent
 - Heroku integration to showcase the server
 - A Docker image
@@ -56,7 +56,7 @@ Due to the time constraint, I have chosen the lightweight frameworks / component
 
 **1. Replace the web framework**
 
-Some of the drawbacks of Flask are: unsuitable for big applications, no admin site, potentially challenging migration... Therefore, we can consider other full-fledged frameworks such as Django to substitute Flask.
+Some of Flask's drawbacks are: unsuitable for big applications, no admin site, potentially challenging migration... Therefore, we can consider other full-fledged frameworks such as Django to substitute Flask.
 
 **2. Replace the database**
 
@@ -68,17 +68,17 @@ We should introduce a separate web page with authentication to display requests 
 
 **4. Replace the Pillow library used**
 
-I used the Pillow library to convert the data sent to the server into an image. Nevertheless, I had some trouble trying to package this project into a Docker image. It took me a few hours to troubleshoot this problem, and fortunately, I managed to find a sample Dockerfile on a Github repository listing the necessary dependencies to build Pillow. Hence, I also need to split the requirements.txt into a separate file for Docker to move Pillow to Dockerfile.
+I used the Pillow library to convert data sent to the server into an image. Nevertheless, I had some trouble trying to package this project into a Docker image. It took me a few hours to troubleshoot this problem, and fortunately, I managed to find a sample Dockerfile on a Github repository listing the necessary dependencies to build Pillow. Hence, I also need to split the `requirements.txt` into a separate file for Docker to move Pillow installation itself to Dockerfile.
 
 The same problem did not occur when installing using Conda locally or Pip on Heroku web page.
 
 **5. Reduce the size of the Docker image and optimize the Dockerfile**
 
-Due to the problem in point 4 above, I had to list quite a number of dependencies and this probably led to a huge Docker image of 1GB despite the simplicity of this project. Further work can be done to trim this Docker image.
+Due to the problem in point 4 above, I had to list quite a number of dependencies and this probably led to a huge Docker image of 1GB despite the simplicity of this project. Further work can be done to trim down this Docker image.
 
 **6. Introduce other features to analyze the pictures sent**
 
-For now, I only focus on finding the rectangle surrounding the face. However, we can introduce other Rest API Endpoints such as to detect the remaining items in the background, or predicting the gender, age, race... of the person.
+For now, I only focus on finding the rectangle surrounding the face. However, we can introduce other Rest API Endpoints such as to detect the remaining items in the background, or predict the gender, age, race... of the person.
 
 ## Contributors
 
