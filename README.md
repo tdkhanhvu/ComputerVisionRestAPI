@@ -5,7 +5,7 @@
 
 ## Components:
 
-![image](static/architecture.png)
+![image](src/static/architecture.png)
 
 This project includes the below components:
 - A REST API Server written in Python using Flask library
