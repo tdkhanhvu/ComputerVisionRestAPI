@@ -34,7 +34,7 @@ $ export FLASK_APP=src/app.py
 $ python -m flask run
 ```
 
-- Go to the home page (port 80) to see the list of requests. If running the server in development code, please change the port from 80 to 5000.
+- Go to the home page (port 80) to see the list of requests. If running the server in development environment, please change the port from 80 to 5000.
 
 ## Client commands:
 
@@ -42,7 +42,7 @@ $ python -m flask run
 $ python src/client.py --api='http://<your_host>:80/recognizeFace' --img_path=<your_path_to_image>
 ```
 
-- If running the server in development code, please change the port from 80 to 5000.
+- If running the server in development environment, please change the port from 80 to 5000.
 
 ## Heroku Integration:
 
