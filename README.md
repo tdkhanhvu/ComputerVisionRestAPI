@@ -10,7 +10,7 @@
 This project includes below components:
 - A REST API Server written in Python using Flask framework
 - A REST API Client to send the HTTP POST request to the server
-- A built-in SQL lite database to record the requests sent
+- A built-in SQLite database to record the requests sent
 - Heroku integration to showcase the server
 - A Docker image
 
@@ -34,13 +34,15 @@ $ export FLASK_APP=src/app.py
 $ python -m flask run
 ```
 
-- Go to the home page (port 80) to see the list of requests.
+- Go to the home page (port 80) to see the list of requests. If running the server in development code, please change the port from 80 to 5000.
 
 ## Client commands:
 
 ```bash
 $ python src/client.py --api='http://<your_host>:80/recognizeFace' --img_path=<your_path_to_image>
 ```
+
+- If running the server in development code, please change the port from 80 to 5000.
 
 ## Heroku Integration:
 
