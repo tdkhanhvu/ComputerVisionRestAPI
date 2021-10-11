@@ -18,7 +18,7 @@ from flask import Flask, request, abort, render_template
 # Lite SQL DB
 import sqlite3 as sql
 
-DB = 'face-recognition-requests.db'
+DB = "face-recognition-requests.db"
 
 def create_table(db):
     """Create the table in this Database if not exists"""
@@ -37,7 +37,7 @@ def write_record(req, db=DB):
 
     with sql.connect(db) as connection:
         cur = connection.cursor()
-        insert_sql = 'INSERT INTO requests (ip, timestamp) values(?, ?)'
+        insert_sql = "INSERT INTO requests (ip, timestamp) values(?, ?)"
         data = (req.remote_addr, str(datetime.now(tz=None)))
 
         cur.execute(insert_sql, data)
@@ -46,35 +46,40 @@ def write_record(req, db=DB):
 
 def convert_into_image(request):
     """Convert the image sent in this request into an Image object"""
-    im_b64 = request.json['image']
-    img_bytes = base64.b64decode(im_b64.encode('utf-8'))
+
+    im_b64 = request.json["image"]
+    img_bytes = base64.b64decode(im_b64.encode("utf-8"))
     
     return Image.open(io.BytesIO(img_bytes))
 
 create_table(DB)
 app = Flask(__name__)
 
-@app.route('/', methods= ['GET'])
+@app.route("/", methods= ["GET"])
 def list_requests(db=DB):
     """List all requests sent to this server"""
 
     with sql.connect(db) as connection:
-        read_sql = 'SELECT * FROM requests;'
+        read_sql = "SELECT * FROM requests;"
 
         cur = connection.cursor()
         cur.execute(read_sql)
 
         data = cur.fetchall()
-        df = pd.DataFrame(data, columns =['Id', 'IP', 'Timestamp'])
+        df = pd.DataFrame(data, columns =["Id", "IP", "Timestamp"])
         print(df.shape)
 
-        return render_template('view.html', tables=[df.to_html()],
-    titles = ['Request'])
+        return render_template(
+            "view.html",
+            tables=[df.to_html()],
+            titles = ["Request"]
+        )
 
-@app.route('/recognizeFace', methods = ['POST'])
+@app.route("/recognizeFace", methods = ["POST"])
 def recognize_face():
     """Send back coordinates of the rectangle surrounding the face"""
-    if not request.json or 'image' not in request.json:
+
+    if not request.json or "image" not in request.json:
         abort(400)
     
     write_record(request)
@@ -83,9 +88,9 @@ def recognize_face():
 
     # PIL image object to numpy array
     arr = np.asarray(img)      
-    print('Receive an image of shape:', arr.shape)
+    print("Receive an image of shape:", arr.shape)
 
     coords = face_recognition.face_locations(arr)
-    print('Return coordinates: ', coords)
+    print("Return coordinates: ", coords)
 
-    return {'coordinates': coords}
+    return {"coordinates": coords}
