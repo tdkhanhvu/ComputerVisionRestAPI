@@ -1,7 +1,7 @@
 # ComputerVisionRestAPI
 
 ## Project Overview
-`ComputerVisionRestAPI` is a Python project allowing users to identify the coordinates of the rectangular boxes localizing faces. Users can send an HTTP POST request with an image attached to the server, and receive back a lists of these rectangles' coordinates. In addition, this project also includes a Client program to make it easier for users to send the image without the hassle of coding.
+`ComputerVisionRestAPI` is a Python project allowing users to identify coordinates of rectangular boxes localizing faces. Users can send an HTTP POST request with an image attached to this server, and receive a list of these rectangles' coordinates. In addition, this project also includes a Client program to make it easier for users to send the image without the hassle of coding.
 
 ## Components:
 
