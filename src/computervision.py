@@ -1,3 +1,5 @@
+# author: Tran Doan Khanh Vu
+# date: 2021-10-09
 # base python imports
 import io
 import base64                  
@@ -13,13 +15,13 @@ from PIL import Image
 import face_recognition
 
 # Rest API library import
-from flask import Flask, request, render_template
+from flask import render_template
 
 # Lite SQL DB
 import sqlite3 as sql
 
-
 class ComputerVision():
+    """The core functions of the REST API to detect rectangles surrounding faces"""
     db = ""
 
     def __init__(self, db):
@@ -58,7 +60,7 @@ class ComputerVision():
         return Image.open(io.BytesIO(img_bytes))
 
     def list_requests(self):
-        """List all requests sent to this server"""
+        """List all HTTP POST requests sent to this server"""
 
         with sql.connect(self.db) as connection:
             read_sql = "SELECT * FROM requests;"
@@ -72,7 +74,10 @@ class ComputerVision():
         return df
 
     def view_requests(self):
+        """Return a web page displaying all HTTP POST requests sent to this server"""
+
         df = self.list_requests()
+
         return render_template(
             "view.html",
             tables=[df.to_html()],
@@ -80,7 +85,7 @@ class ComputerVision():
         )
 
     def recognize_face(self, request):
-        """Send back coordinates of the rectangle surrounding the face"""
+        """Send back coordinates of rectangles surrounding faces"""
 
         if not request.json or "image" not in request.json:
             return {"coordinates": []}

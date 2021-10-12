@@ -1,7 +1,7 @@
 # author: Tran Doan Khanh Vu
 # date: 2021-10-09
 
-"""Send an image to a Rest API in Python to get back the coordinates of the box localizing the face
+"""Send an image to a Rest API in Python to get back the coordinates of boxes localizing faces
 
 Usage: src/client.py --api=<api> --img_path=<img_path>
 

@@ -1,3 +1,5 @@
+# author: Tran Doan Khanh Vu
+# date: 2021-10-09
 # Rest API library import
 from flask import Flask, request
 from src.computervision import ComputerVision
