@@ -78,7 +78,15 @@ The same problem did not occur when installing using Conda locally or Pip on Her
 
 Due to the problem in point 4 above, I had to list quite a number of dependencies and this probably led to a huge Docker image of 1GB despite the simplicity of this project. Further work can be done to trim down this Docker image.
 
-**6. Introduce other features to analyze the pictures sent**
+**6. Record more details from the HTTP POST request**
+
+The application is only recording the IP address of clients and the time the request was received. We can explore other useful information to record such as the size of the image, how many faces were detected...
+
+**7. Adding more unit tests to increase code coverage**
+
+I only test the main function `recognize_face` and a few other database operations due to time constraint. More tests should be added to thoroughly test all parts of this project.
+
+**8. Introduce other features to analyze the pictures sent**
 
 For now, I only focus on finding the rectangle surrounding the face. However, we can introduce other Rest API Endpoints such as to detect the remaining items in the background, or predict the gender, age, race... of the person.
 
