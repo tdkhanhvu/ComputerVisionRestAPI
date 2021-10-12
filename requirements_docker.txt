@@ -2,3 +2,5 @@ pandas
 gunicorn
 face_recognition
 Flask
+pytest
+mockito

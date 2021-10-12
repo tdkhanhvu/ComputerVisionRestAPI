@@ -7,5 +7,7 @@ dependencies:
   - pillow
   - face_recognition
   - pip>=20
+  - pytest
+  - mockito
   - pip:
     - Flask

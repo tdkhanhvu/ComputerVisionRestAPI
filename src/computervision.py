@@ -20,14 +20,15 @@ import sqlite3 as sql
 
 
 class ComputerVision():
-    DB = ""
+    db = ""
 
+    def __init__(self, db):
+        self.db = db
 
-    def create_table(self, db):
+    def create_table(self):
         """Create the table in this Database if not exists"""
-        self.DB = db
 
-        with sql.connect(db) as connection:
+        with sql.connect(self.db) as connection:
             connection.execute("""
                 CREATE TABLE IF NOT EXISTS requests (
                     id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
@@ -36,13 +37,10 @@ class ComputerVision():
                 );
             """)
 
-    def write_record(self, req, db=None):
+    def write_record(self, req):
         """Write the timestamp and ip address of this request into the db"""
 
-        if db is None:
-            db = self.DB
-
-        with sql.connect(db) as connection:
+        with sql.connect(self.db) as connection:
             cur = connection.cursor()
             insert_sql = "INSERT INTO requests (ip, timestamp) values(?, ?)"
             data = (req.remote_addr, str(datetime.now(tz=None)))
@@ -59,13 +57,10 @@ class ComputerVision():
         
         return Image.open(io.BytesIO(img_bytes))
 
-    def list_requests(self, db=None):
+    def list_requests(self):
         """List all requests sent to this server"""
 
-        if db is None:
-            db = self.DB
-
-        with sql.connect(db) as connection:
+        with sql.connect(self.db) as connection:
             read_sql = "SELECT * FROM requests;"
 
             cur = connection.cursor()
@@ -73,13 +68,16 @@ class ComputerVision():
 
             data = cur.fetchall()
             df = pd.DataFrame(data, columns =["Id", "IP", "Timestamp"])
-            print(df.shape)
+        
+        return df
 
-            return render_template(
-                "view.html",
-                tables=[df.to_html()],
-                titles = ["Request"]
-            )
+    def view_requests(self):
+        df = self.list_requests()
+        return render_template(
+            "view.html",
+            tables=[df.to_html()],
+            titles = ["Request"]
+        )
 
     def recognize_face(self, request):
         """Send back coordinates of the rectangle surrounding the face"""
